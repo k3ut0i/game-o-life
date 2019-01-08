@@ -1,0 +1,2 @@
+* A Collection of cellular automata programs
+** Classic Conway

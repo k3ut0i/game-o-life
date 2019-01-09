@@ -4,6 +4,8 @@
 (in-package :classic-conway)
 
 (defun cell-next-state (cell-type neighbors)
+  (declare (type boolean cell-type)
+	   (type list neighbors ))
   (let ((alive-neighbors (loop :for n :in neighbors :count n)))
     (if cell-type
 	(case alive-neighbors
@@ -13,6 +15,8 @@
 	(= alive-neighbors 3))))
 
 (defun get-neighbors (array x y)
+  (declare (type (array boolean) array)
+	   (type fixnum x y))
   (let ((neighbor-indices (list (cons (1+ x) (1+ y))
 				(cons (1+ x) y)
 				(cons (1+ x) (1- y))
@@ -29,6 +33,7 @@
 
 (defun step-life (state)
   "Step the STATE of life using conway rules."
+  (declare (type (array boolean) state))
   (let ((next-life (make-array (array-dimensions state)
 			       :element-type 'boolean)))
     (destructuring-bind (width height)

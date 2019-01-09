@@ -2,26 +2,10 @@
   (:use :cl
 	:rt
 	:classic-conway
+	:classic-conway/input-states
 	:utils))
 
 (in-package :test-classic-conway)
-
-(defvar +blinker+ (make-array '(5  5)
-			      :initial-contents
-			      '((nil nil nil nil nil)
-				(nil nil nil nil nil)
-				(nil t t t nil)
-				(nil nil nil nil nil)
-				(nil nil nil nil nil))))
-
-(defvar +toad+ (make-array '(6 6)
-			   :initial-contents
-			   '((nil nil nil nil nil nil)
-			     (nil nil nil nil nil nil)
-			     (nil nil t t t nil)
-			     (nil t t t nil nil)
-			     (nil nil nil nil nil nil)
-			     (nil nil nil nil nil nil))))
 
 (defun double-identity (fn initial-state)
   (array-equal (funcall fn (funcall fn initial-state)) initial-state))
@@ -32,4 +16,8 @@
 
 (deftest "toad"
     (double-identity #'step-life +toad+)
+  t)
+
+(deftest "beacon"
+    (double-identity #'step-life +beacon+)
   t)

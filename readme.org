@@ -1,2 +1,33 @@
 * A Collection of cellular automata programs
+Load examples sub system to create these images.
+#+BEGIN_SRC lisp
+  (asdf:load-system :game-o-life/examples)
+#+END_SRC
 ** Classic Conway
+
+*** Beacon
+#+BEGIN_SRC shell :exports results :results value file
+  convert beacon.gif -filter box -resize 120x120 beacon_v.gif
+  printf "beacon_v.gif"
+#+END_SRC
+
+#+RESULTS:
+[[file:beacon_v.gif]]
+
+*** Toad
+#+BEGIN_SRC shell :exports results :results value file
+  convert toad.gif -filter box -resize 120x120 toad_v.gif
+  printf "toad_v.gif"
+#+END_SRC
+
+#+RESULTS:
+[[file:toad_v.gif]]
+
+*** Blinker
+#+BEGIN_SRC shell :exports results :results value file
+  convert blinker.gif -filter box -resize 120x120 blinker_v.gif
+  printf "blinker_v.gif"
+#+END_SRC
+
+#+RESULTS:
+[[file:blinker_v.gif]]

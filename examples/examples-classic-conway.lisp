@@ -11,7 +11,6 @@
 (defvar +convert-prog-options+ '("-delay" "100"  ;; Delay b/w frames
 				 "-loop" "0"     ;; Gif looping
 				 "pbm:-"
-				 "-resize" "100x100"
 				 "gif:-"))
 
 (defun life-for-n-gen (input-state num-gen output-stream)
@@ -21,18 +20,21 @@
      :do (write-array-to-pbm state output-stream)
      :do (setq state (step-life state))))
 
-(defun gen-beacon ()
-  (with-open-file (gif-stream "beacon.gif"
+
+(defun gen-image (input-state num-gen output-file-name)
+  (with-open-file (gif-stream output-file-name
 			  :direction :output
 			  :if-exists :supersede)
     (let ((pbm-stream (make-string-output-stream)))
-      (life-for-n-gen +beacon+ 10 pbm-stream)
+      (life-for-n-gen input-state num-gen pbm-stream)
       (convert-to-gif (make-string-input-stream
 		       (get-output-stream-string pbm-stream))
 		      gif-stream))))
 
 (defun gen-all ()
-  (gen-beacon))
+  (gen-image +beacon+ 10 "beacon.gif")
+  (gen-image +toad+ 10 "toad.gif")
+  (gen-image +blinker+ 10 "blinker.gif"))
 
 (defun convert-to-gif (pbm-input-stream gif-output-stream)
   (run-program

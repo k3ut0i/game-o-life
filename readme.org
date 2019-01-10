@@ -4,30 +4,12 @@ Load examples sub system to create these images.
   (asdf:load-system :game-o-life/examples)
 #+END_SRC
 ** Classic Conway
-
-*** Beacon
-#+BEGIN_SRC shell :exports results :results value file
+Resize with
+#+BEGIN_SRC shell
   convert beacon.gif -filter box -resize 120x120 beacon_v.gif
-  printf "beacon_v.gif"
 #+END_SRC
 
-#+RESULTS:
-[[file:beacon_v.gif]]
+*** Oscillators
+[[file:beacon_v.gif]]  [[file:toad_v.gif]][[file:blinker_v.gif]]
 
-*** Toad
-#+BEGIN_SRC shell :exports results :results value file
-  convert toad.gif -filter box -resize 120x120 toad_v.gif
-  printf "toad_v.gif"
-#+END_SRC
-
-#+RESULTS:
-[[file:toad_v.gif]]
-
-*** Blinker
-#+BEGIN_SRC shell :exports results :results value file
-  convert blinker.gif -filter box -resize 120x120 blinker_v.gif
-  printf "blinker_v.gif"
-#+END_SRC
-
-#+RESULTS:
-[[file:blinker_v.gif]]
+*** Gosper Glider Gun

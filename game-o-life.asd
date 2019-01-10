@@ -1,8 +1,10 @@
 (defsystem :game-o-life
   :version "0.1.0"
+  :depends-on (:cl-ppcre :split-sequence)
   :components ((:module "src"
 			:components ((:file "utils")
 				     (:file "image-utils")
+				     (:file "ca-file-format")
 				     (:file "classic-conway"))))
   :in-order-to ((test-op (load-op :game-o-life/test)))
   :perform (test-op (o c) (symbol-call :test-classic-conway :do-tests)))

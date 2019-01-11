@@ -10,6 +10,7 @@ Resize with
 #+END_SRC
 
 *** Oscillators
-[[file:beacon_v.gif]]  [[file:toad_v.gif]][[file:blinker_v.gif]]
+[[file:beacon_big.gif]]  [[file:toad_big.gif]]  [[file:blinker_big.gif]]
 
 *** Gosper Glider Gun
+[[file:gosperglidergun_big.gif]]

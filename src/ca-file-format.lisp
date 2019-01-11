@@ -1,7 +1,9 @@
 (defpackage :ca-file-format
   (:use :cl
 	:cl-ppcre
-	:split-sequence))
+	:split-sequence)
+  (:export :read-life-1.05
+	   :read-rle))
 (in-package :ca-file-format)
 
 ;; FIXME: handling blank lines concatenated to a dot and test basic working.
@@ -53,7 +55,12 @@
 			 :initial-element (eq (cdr run-len) :alive)))
 	    run-lengths)))
 
-(defun read-rle (stream)
+(defun read-rle (stream horizontal-padding vertical-padding)
+  ;; Skip metadata
+  (loop :for c = (peek-char nil stream)
+     :while (char= c #\#)
+     :do (read-line stream))
+  ;; Read data
   (register-groups-bind ((#'read-from-string x y))
       ("x[ ]*=(.*),[ ]*y[ ]*=(.*)" (read-line stream nil nil))
     (let ((rle-string (loop
@@ -64,7 +71,17 @@
 			 :do (write-char c rle-string-stream)
 			 :finally (return (get-output-stream-string
 					   rle-string-stream)))))
-      (make-array (list y x) ;; Array num-of-rows is x??
-		  :initial-contents (mapcar (lambda (run-len-str)
-					      (read-rle-line run-len-str x))
-					    (split-sequence #\$ rle-string))))))
+      (let ((life-array (make-array (list (+ y (* 2 vertical-padding))
+					  (+ x (* 2 horizontal-padding)))
+				    :initial-element nil))
+	    (inp-state (make-array (list y x) ;; Array num-of-rows is x??
+				   :initial-contents
+				   (mapcar (lambda (run-len-str)
+					     (read-rle-line run-len-str x))
+					   (split-sequence #\$ rle-string)))))
+	(dotimes (j y life-array)
+	  (dotimes (i x)
+	    (setf (aref life-array
+			(+ j vertical-padding)
+			(+ i horizontal-padding))
+		  (aref inp-state j i))))))))
